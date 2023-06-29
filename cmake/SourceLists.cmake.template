@@ -1,0 +1,3 @@
+set(SOURCES_LIST ${SOURCES_LIST}
+    __the_sources__
+)

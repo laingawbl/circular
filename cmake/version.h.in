@@ -1,0 +1,16 @@
+#pragma once
+
+#ifdef __INTELLISENSE__
+// Redmond corporation, go fuck yourself
+#pragma diag_suppress 1696
+#pragma diag_suppress 65
+#endif
+
+#include <string>
+
+const std::string GIT_HASH = "@GIT_HASH@";
+
+#ifdef __INTELLISENSE__
+#pragma diag_default 1696
+#pragma diag_default 65
+#endif
