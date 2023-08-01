@@ -28,15 +28,20 @@ endif()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+list(APPEND feature_tokens "features")
+
 # Only do these if this is the main project, and not if it is included through add_subdirectory
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
   # Optionally set things like CMAKE_CXX_STANDARD, CMAKE_POSITION_INDEPENDENT_CODE here
 
-  # Let's ensure -std=c++xx instead of -std=g++xx
+  # Ensure -std=c++xx instead of -std=g++xx
   set(CMAKE_CXX_EXTENSIONS OFF)
 
-  # Let's nicely support folders in IDEs
+  # Set -fPIC
+  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+  # Nicely support folders in IDEs
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
   # Testing only available if this is the main app
@@ -48,6 +53,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   # Docs only available if this is the main app
   find_package(Doxygen)
   if(Doxygen_FOUND)
+    list(APPEND feature_tokens "docs")
     add_subdirectory(docs)
   else()
     message(STATUS "Doxygen not found, not building docs")
@@ -56,10 +62,15 @@ endif()
 
 include(FetchContent)
 
+# Check if we can enable interprocedural optimization
+include(CheckIPOSupported)
+
+# Register subdirectories
 add_subdirectory(src)
 
 if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING)
    AND BUILD_TESTING)
+  list(APPEND feature_tokens "tests")
   add_subdirectory(tests)
 endif()
 
@@ -84,15 +95,17 @@ check_cxx_compiler_flag("-xHost" _xhost_works)
 set(_CXX_FLAGS)
 if(_march_native_works)
   message(STATUS "Using processor's vector instructions (-march=native compiler flag set)")
+  list(APPEND feature_tokens "arch-native")
   set(_CXX_FLAGS "-march=native")
 elseif(_xhost_works)
   message(STATUS "Using processor's vector instructions (-xHost compiler flag set)")
+  list(APPEND feature_tokens "arch-xhost")
   set(_CXX_FLAGS "-xHost")
 else()
   message(STATUS "No suitable compiler flag found for vectorization")
 endif()
 
-list(APPEND flags "-fPIC" "-Wall")
+list(APPEND flags "-Wall")
 if(NOT WIN32)
   list(APPEND flags "-Wextra" "-Wpedantic")
 endif()
@@ -107,3 +120,23 @@ configure_file (
 ################
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+
+#########
+# Flags #
+#########
+
+check_ipo_supported(RESULT ipo_result)
+if(ipo_result)
+  list(APPEND feature_tokens "ipo")
+  set_target_properties(foo PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+endif()
+
+##########
+# Finish #
+##########
+
+list(JOIN feature_tokens " " feature_string)
+message(STATUS "Built with these features:")
+message(STATUS feature_string)
+
+message(STATUS "CMakeLists: done.")
