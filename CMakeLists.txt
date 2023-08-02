@@ -60,11 +60,6 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   endif()
 endif()
 
-include(FetchContent)
-
-# Check if we can enable interprocedural optimization
-include(CheckIPOSupported)
-
 ################
 # Dependencies #
 ################
@@ -72,7 +67,19 @@ include(CheckIPOSupported)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 include(SourceLists)
 
-# Register subdirectories
+# Install lib and public headers to GNU standard locations
+include(GNUInstallDirs)
+
+# Allow fetching libraries
+include(FetchContent)
+
+# Check if we can enable interprocedural optimization
+include(CheckIPOSupported)
+
+#########################
+# Subdirectory registry #
+#########################
+
 add_subdirectory(src)
 
 if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR CIRCULAR_BUILD_TESTING)
@@ -130,6 +137,8 @@ configure_file (
 ##########
 # Finish #
 ##########
+
+install(DIRECTORY include/circular DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 list(JOIN feature_tokens " " feature_string)
 message(STATUS "Built with these features:")

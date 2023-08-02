@@ -39,3 +39,6 @@ target_compile_features(libcircular
   PUBLIC
   cxx_std_20
 )
+
+# trust ${CMAKE_INSTALL_LIBDIR} will know where to put it
+install(TARGETS libcircular LIBRARY)
