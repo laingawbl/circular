@@ -65,10 +65,17 @@ include(FetchContent)
 # Check if we can enable interprocedural optimization
 include(CheckIPOSupported)
 
+################
+# Dependencies #
+################
+
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+include(SourceLists)
+
 # Register subdirectories
 add_subdirectory(src)
 
-if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING)
+if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR CIRCULAR_BUILD_TESTING)
    AND BUILD_TESTING)
   list(APPEND feature_tokens "tests")
   add_subdirectory(tests)
@@ -110,26 +117,15 @@ if(NOT WIN32)
   list(APPEND flags "-Wextra" "-Wpedantic")
 endif()
 
+check_ipo_supported(RESULT can_use_ipo)
+if(can_use_ipo)
+  list(APPEND feature_tokens "ipo")
+endif()
+
 configure_file (
     "${PROJECT_SOURCE_DIR}/cmake/version.h.in"
     "${PROJECT_BINARY_DIR}/cmake/version.h"
 )
-
-################
-# Dependencies #
-################
-
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
-
-#########
-# Flags #
-#########
-
-check_ipo_supported(RESULT ipo_result)
-if(ipo_result)
-  list(APPEND feature_tokens "ipo")
-  set_target_properties(foo PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
-endif()
 
 ##########
 # Finish #
@@ -137,6 +133,6 @@ endif()
 
 list(JOIN feature_tokens " " feature_string)
 message(STATUS "Built with these features:")
-message(STATUS feature_string)
+message(STATUS "${feature_string}")
 
-message(STATUS "CMakeLists: done.")
+message(STATUS "CMakeLists: top level done")

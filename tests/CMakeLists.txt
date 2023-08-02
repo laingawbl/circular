@@ -15,6 +15,7 @@ set_target_properties(tests
     CXX_STANDARD 20
     CXX_EXTENSIONS OFF
     CXX_STANDARD_REQUIRED ON
+    LINKER_LANGUAGE CXX
   )
 
 target_link_libraries(tests Catch2::Catch2WithMain)
