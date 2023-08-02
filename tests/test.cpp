@@ -4,8 +4,8 @@
 
 TEST_CASE("Quick check", "[main]") {
   std::vector<double> values{1, 2., 3.};
-  auto [mean, moment] = circular::accumulate_vector(values);
+  auto [mean, var] = circular::accumulate_vector(values);
 
   REQUIRE(mean == 2.0);
-  REQUIRE_THAT(moment, Catch::Matchers::WithinAbs(4.666666, 1e-6));
+  REQUIRE_THAT(var, Catch::Matchers::WithinAbs(0.666666, 1e-6));
 }
