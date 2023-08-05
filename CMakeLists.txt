@@ -76,6 +76,10 @@ include(FetchContent)
 # Check if we can enable interprocedural optimization
 include(CheckIPOSupported)
 
+set(TF_BUILD_EXAMPLES OFF)
+set(TF_BUILD_TESTS OFF)
+add_subdirectory(extern/taskflow)
+
 #########################
 # Subdirectory registry #
 #########################
