@@ -4,7 +4,12 @@
 #include <taskflow/taskflow.hpp>
 
 namespace circular {
-// Thin wrapper around a tf::Future<void>
+
+/**
+ * @brief Thin wrapper around a tf::Future<void>.
+ *
+ * It should do everything a tf::Future<void> can do.
+ */
 class Future {
 public:
   /**
