@@ -10,6 +10,11 @@
 
 using namespace std::chrono_literals;
 
+/* These test cases will be more useful if Tasker becomes an interface that a
+ * single-threaded class can implement (and has to mimic like... taskflow on a
+ * single core machine).
+ */
+
 TEST_CASE("Tasker executes a simple task", "[tasker]") {
   bool executed = false;
 
