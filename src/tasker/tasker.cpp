@@ -4,6 +4,8 @@
 
 using namespace circular;
 
+Tasker *Tasker::_instance = nullptr;
+
 Tasker &circular::Tasker::Get() {
   if (nullptr == _instance) {
     _instance = new Tasker;
@@ -12,7 +14,7 @@ Tasker &circular::Tasker::Get() {
 }
 
 TaskFuture circular::Tasker::Submit(std::function<void()> task) {
-    tf::Taskflow f;
-    auto t = f.emplace(task);
-    return _ex.run(f);
+  tf::Taskflow f;
+  auto t = f.emplace(task);
+  return _ex.run(std::move(f));
 }

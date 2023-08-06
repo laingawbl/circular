@@ -3,6 +3,8 @@
 #include <tuple>
 #include <vector>
 
+#include "tasker.hpp"
+
 /// \brief Accumulate a vector to produce the mean and the variance of the
 /// distribution.
 ///
