@@ -13,7 +13,7 @@ Tasker &circular::Tasker::Get() {
   return *_instance;
 }
 
-TaskFuture circular::Tasker::Submit(std::function<void()> task) {
+Future circular::Tasker::Submit(std::function<void()> task) {
   tf::Taskflow f;
   auto t = f.emplace(task);
   return _ex.run(std::move(f));
