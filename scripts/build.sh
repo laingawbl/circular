@@ -4,6 +4,7 @@
 
 set -x
 
-[ ./get_source_files.sh ] || { echo "could not get source files"; exit 1; }
+./scripts/get_source_files.sh
+test $? -eq 0 || { echo "could not get source files"; exit 1; }
 
 mkdir -p build/ && cd build && cmake .. && make
