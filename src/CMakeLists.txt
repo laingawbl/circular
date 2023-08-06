@@ -2,7 +2,10 @@
 # Build libcircular #
 #####################
 
-set(HEADER_LIST "${PROJECT_SOURCE_DIR}/include/circular/lib.hpp")
+set(HEADER_LIST
+  "${PROJECT_SOURCE_DIR}/include/circular/lib.hpp"
+  "${PROJECT_SOURCE_DIR}/include/circular/tasker.hpp"
+)
 
 if(NOT DEFINED SOURCES_LIST)
   message(FATAL_ERROR "No sources are defined. Check SourceLists.cmake.")
@@ -17,6 +20,8 @@ add_library(libcircular
 if(can_use_ipo)
   set_target_properties(libcircular PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
+
+target_link_libraries(libcircular PUBLIC Taskflow)
 
 set_target_properties(libcircular
   PROPERTIES
