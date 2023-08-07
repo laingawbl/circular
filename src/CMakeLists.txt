@@ -2,6 +2,7 @@
 # Build libcircular #
 #####################
 
+# these are the PUBLIC headers only, not the ones in src/
 set(HEADER_LIST
   "${PROJECT_SOURCE_DIR}/include/circular/lib.hpp"
   "${PROJECT_SOURCE_DIR}/include/circular/tasker.hpp"
