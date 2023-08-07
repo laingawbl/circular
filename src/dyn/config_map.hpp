@@ -7,19 +7,24 @@
 
 namespace circular {
 
-class ConfigVariant;
-using VariantList = std::vector<ConfigVariant>;
-using VariantDict = std::unordered_map<std::string, ConfigVariant>;
-using ConfigVariant = std::variant<std::monostate, bool, int, double,
-                                   std::string, VariantList, VariantDict>;
+using PodVariant = std::variant<std::monostate, bool, int, double,
+                                std::string>; // no containers
+
+using VariantList = std::vector<PodVariant>;
+using VariantDict = std::unordered_map<std::string, PodVariant>;
+
+using ConfigVariant =
+    std::variant<std::monostate, bool, int, double, std::string, VariantList,
+                 VariantDict>; // has containers
 
 /**
  * @brief A two-level unordered_map from string sections/keys to variant values.
  *
- * ConfigMap is an STL-based analogue to godot::ConfigFile, with two
+ * ConfigMap is an STL-based analogue to godot::ConfigFile, with three
  * differences:
  * 1. no methods to read/write/parse/stringify; and
- * 2. values are restricted to {BOOL, INT, DOUBLE, STRING, ARRAY, DICT}.
+ * 2. values are restricted to {BOOL, INT, DOUBLE, STRING, ARRAY, DICT}, and
+ * 3. The ARRAY and DICT therein are limited to non-container types. Sorry.
  * It stores key-value pairs, with std::string keys and std::variant values.
  * These pairs are further collected into sections, identified by std::string
  * section keys.
