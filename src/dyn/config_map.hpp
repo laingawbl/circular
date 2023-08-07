@@ -34,7 +34,8 @@ using ConfigVariant =
  * std::string and values <-> ConfigVariant.
  */
 class ConfigMap {
-  using _config_map_repr_t = std::unordered_map<std::string, VariantDict>;
+  using _config_section_t = std::unordered_map<std::string, ConfigVariant>;
+  using _config_map_repr_t = std::unordered_map<std::string, _config_section_t>;
 
 public:
   ConfigMap() = default;
@@ -89,6 +90,6 @@ public:
   void set_value(std::string section, std::string key, ConfigVariant value);
 
 private:
-  _config_map_repr_t _repr;
+  _config_map_repr_t _repr{};
 };
 } // namespace circular

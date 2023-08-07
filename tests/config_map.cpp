@@ -18,20 +18,27 @@ TEST_CASE("ConfigMap stores and gets ConfigVariants of various types",
   m.set_value("sec", "a_list", l);
   m.set_value("sec", "a_dict", d);
 
-  auto bool_as_variant = m.get_value("", "a_bool", false);
+  auto bool_as_variant = m.get_value("", "a_bool", circular::ConfigVariant{});
   REQUIRE(std::get<bool>(bool_as_variant) == true);
 
-  auto int_as_variant = m.get_value("", "an_int", 0);
+  auto int_as_variant = m.get_value("", "an_int", circular::ConfigVariant{});
   REQUIRE(std::get<int>(int_as_variant) == 1);
 
-  auto double_as_variant = m.get_value("", "a_float", 0);
+  auto double_as_variant =
+      m.get_value("", "a_double", circular::ConfigVariant{});
   REQUIRE(std::get<double>(double_as_variant) == 1.0);
 
-  auto string_as_variant = m.get_value("", "a_string", "");
+  auto string_as_variant =
+      m.get_value("", "a_string", circular::ConfigVariant{});
   REQUIRE(std::get<std::string>(string_as_variant) == "foo");
 
-  auto list_as_variant = m.get_value("sec", "a_list", "");
-  REQUIRE(std::get<circular::VariantList>(string_as_variant) == l);
+  auto list_as_variant =
+      m.get_value("sec", "a_list", circular::ConfigVariant{});
+  REQUIRE(std::get<circular::VariantList>(list_as_variant) == l);
+
+  auto dict_as_variant =
+      m.get_value("sec", "a_dict", circular::ConfigVariant{});
+  REQUIRE(std::get<circular::VariantDict>(dict_as_variant) == d);
 }
 
 TEST_CASE("ConfigMap returns a default on lookup failure", "[config_map]") {
