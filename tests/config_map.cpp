@@ -69,3 +69,17 @@ TEST_CASE("ConfigMap deletes keys", "[config_map]") {
   REQUIRE(m.get_section_keys("").size() == 1);
   REQUIRE(m.get_section_keys("sec").size() == 0);
 }
+
+TEST_CASE("ConfigMap can test for section and key existence", "[config_map]") {
+  circular::ConfigMap m{};
+
+  m.set_value("", "foo", 19);
+  m.set_value("sec", "bar", 7);
+
+  REQUIRE(m.has_section("sec") == true);
+  REQUIRE(m.has_section("baz") == false);
+
+  REQUIRE(m.has_section_key("sec", "bar") == true);
+  REQUIRE(m.has_section_key("sec", "qux") == false);
+  REQUIRE(m.has_section_key("ick", "foo") == false);
+}

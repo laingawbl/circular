@@ -93,3 +93,12 @@ void circular::ConfigMap::set_value(std::string section, std::string key,
     d.insert_or_assign(key, value);
   }
 }
+
+bool circular::ConfigMap::has_section(std::string section) const {
+  return _repr.contains(section);
+}
+
+bool circular::ConfigMap::has_section_key(std::string section,
+                                          std::string key) const {
+  return _repr.contains(section) && _repr.at(section).contains(key);
+}

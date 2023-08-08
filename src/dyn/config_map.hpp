@@ -45,20 +45,20 @@ public:
   void clear();
 
   /// @brief erase a single section and all its key-value pairs.
-  /// @param section the section to be erased.
+  /// @param section The section to be erased.
   ///
   /// Throws if section does not exist.
   void erase_section(std::string section);
 
   /// @brief erase a key-value pair.
-  /// @param section the section of the key to be erased.
-  /// @param key the key whose key-value pair is to be erased.
+  /// @param section The section of the key to be erased.
+  /// @param key The key whose key-value pair is to be erased.
   ///
   /// Throws if either section or key do not exist.
   void erase_section_key(std::string section, std::string key);
 
   /// @brief list the keys present in a section.
-  /// @param section the section for which a list of keys is desired.
+  /// @param section The section for which a list of keys is desired.
   /// @return A vector of keys in that section (in no particular order).
   std::vector<std::string> get_section_keys(std::string section) const;
 
@@ -67,9 +67,9 @@ public:
   std::vector<std::string> get_sections() const;
 
   /// @brief Look up a value, and either return a default or throw if not found.
-  /// @param section the section of the key-value pair to be looked up.
-  /// @param key the key to look up.
-  /// @param default_value the value to return if there is no value for
+  /// @param section The section of the key-value pair to be looked up.
+  /// @param key The key to look up.
+  /// @param default_value The value to return if there is no value for
   /// section/key. If you don't want this to happen, passing ConfigVariant{}
   /// (equivalently std::monostate) will result in get_value throwing
   /// std::[WHAT_EXCEPTION?] instead of returning anything on lookup failure.
@@ -80,7 +80,7 @@ public:
   ConfigVariant get_value(std::string section, std::string key,
                           ConfigVariant default_value = ConfigVariant{});
 
-  /// @brief
+  /// @brief Insert or assign a value in the ConfigMap.
   /// @param section The section of the key-value pair to create.
   /// @param key The key whose value is to be set.
   /// @param value The value to be assigned. Passing ConfigVariant{}
@@ -88,6 +88,18 @@ public:
   ///
   /// If either section or key do not exist, they will be created.
   void set_value(std::string section, std::string key, ConfigVariant value);
+
+  /// @brief Test whether the ConfigMap contains a section with that name.
+  /// @param section The section whose existence is in question.
+  /// @return true if the ConfigMap contains a section with that name.
+  bool has_section(std::string section) const;
+
+  /// @brief Test whether the ConfigMap contains a section and key with that
+  /// name.
+  /// @param section The section of the key whose existence is in question.
+  /// @param key The key whose existence is in question.
+  /// @return true if the ConfigMap contains a section/key with those names.
+  bool has_section_key(std::string section, std::string key) const;
 
 private:
   _config_map_repr_t _repr{};
