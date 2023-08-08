@@ -54,7 +54,7 @@ public:
   /// @param section The section of the key to be erased.
   /// @param key The key whose key-value pair is to be erased.
   ///
-  /// Throws if either section or key do not exist.
+  /// Throws std::out_of_range if either section or key do not exist.
   void erase_section_key(const std::string &section, const std::string &key);
 
   /// @brief list the keys present in a section.

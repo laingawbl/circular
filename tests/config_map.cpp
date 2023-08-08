@@ -1,5 +1,5 @@
 #include <catch2/catch_all.hpp>
-#include <circular/lib.hpp>
+#include <circular/config_map.hpp>
 
 #include <vector>
 

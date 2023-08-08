@@ -1,5 +1,4 @@
-#include "config_map.hpp"
-
+#include <circular/config_map.hpp>
 #include <stdexcept>
 
 using namespace circular;
