@@ -47,7 +47,7 @@ public:
   /// @brief erase a single section and all its key-value pairs.
   /// @param section The section to be erased.
   ///
-  /// Throws if section does not exist.
+  /// Throws std::out_of_range if section does not exist.
   void erase_section(const std::string &section);
 
   /// @brief erase a key-value pair.
@@ -72,11 +72,12 @@ public:
   /// @param default_value The value to return if there is no value for
   /// section/key. If you don't want this to happen, passing ConfigVariant{}
   /// (equivalently std::monostate) will result in get_value throwing
-  /// std::[WHAT_EXCEPTION?] instead of returning anything on lookup failure.
+  /// std::out_of_range instead of returning anything on lookup failure.
   /// @return The value for the section/key, or the default value on lookup
   /// failure (if default_value != std::monostate).
   ///
-  /// Throws on lookup failure if default_value == std::monostate.
+  /// Throws std::out_of_range on lookup failure if default_value ==
+  /// std::monostate.
   ConfigVariant get_value(const std::string &section, const std::string &key,
                           ConfigVariant default_value = ConfigVariant{});
 
