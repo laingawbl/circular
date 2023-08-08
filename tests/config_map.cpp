@@ -58,3 +58,14 @@ TEST_CASE("ConfigMap throws on lookup failure if defaulted to std::monostate",
   REQUIRE_THROWS(m.get_value("foo", "bar"));
   REQUIRE_THROWS(m.get_value("foo", "bar", std::monostate{}));
 }
+
+TEST_CASE("ConfigMap deletes keys", "[config_map]") {
+  circular::ConfigMap m{};
+
+  m.set_value("", "foo", 19);
+  m.set_value("sec", "bar", 7);
+  m.erase_section_key("sec", "bar");
+
+  REQUIRE(m.get_section_keys("").size() == 1);
+  REQUIRE(m.get_section_keys("sec").size() == 0);
+}
