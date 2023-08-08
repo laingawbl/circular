@@ -3,6 +3,7 @@
 #include <tuple>
 #include <vector>
 
+#include "../src/dyn/config_map.hpp"
 #include "tasker.hpp"
 
 /// \brief Accumulate a vector to produce the mean and the variance of the

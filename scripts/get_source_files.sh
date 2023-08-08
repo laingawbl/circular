@@ -8,7 +8,7 @@ set -x
 touch cmake/SourceLists.cmake
 touch cmake/SourceLists.txt
 
-find src/ -type f -name *.cpp -o -name *.h -o -name *.inl | 
+find src/ -type f -name *.cpp -o -name *.hpp -o -name *.inl |
     awk '{print "$${PROJECT_SOURCE_DIR}/"$1}' > cmake/SourceLists.txt
 
 rg --replace "$(cat cmake/SourceLists.txt)" --passthru --no-line-number \
