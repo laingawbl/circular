@@ -6,7 +6,7 @@ using namespace circular;
 
 void circular::ConfigMap::clear() { _repr.clear(); }
 
-void circular::ConfigMap::erase_section(std::string section) {
+void circular::ConfigMap::erase_section(const std::string &section) {
   auto f = _repr.find(section);
   if (f == _repr.end()) {
     throw std::out_of_range{
@@ -15,8 +15,8 @@ void circular::ConfigMap::erase_section(std::string section) {
   _repr.erase(f);
 }
 
-void circular::ConfigMap::erase_section_key(std::string section,
-                                            std::string key) {
+void circular::ConfigMap::erase_section_key(const std::string &section,
+                                            const std::string &key) {
   auto &d = _repr.at(section);
   auto k = d.find(key);
   if (k == d.end()) {
@@ -27,7 +27,7 @@ void circular::ConfigMap::erase_section_key(std::string section,
 }
 
 std::vector<std::string>
-circular::ConfigMap::get_section_keys(std::string section) const {
+circular::ConfigMap::get_section_keys(const std::string &section) const {
   auto d = _repr.at(section);
 
   std::vector<std::string> keys{};
@@ -49,8 +49,8 @@ std::vector<std::string> circular::ConfigMap::get_sections() const {
   return sections;
 }
 
-ConfigVariant circular::ConfigMap::get_value(std::string section,
-                                             std::string key,
+ConfigVariant circular::ConfigMap::get_value(const std::string &section,
+                                             const std::string &key,
                                              ConfigVariant default_value) {
   auto finds = _repr.find(section);
   if (finds == _repr.end()) {
@@ -74,7 +74,8 @@ ConfigVariant circular::ConfigMap::get_value(std::string section,
   return findk->second;
 }
 
-void circular::ConfigMap::set_value(std::string section, std::string key,
+void circular::ConfigMap::set_value(const std::string &section,
+                                    const std::string &key,
                                     ConfigVariant value) {
   auto finds = _repr.find(section);
   if (finds == _repr.end()) {
@@ -94,11 +95,11 @@ void circular::ConfigMap::set_value(std::string section, std::string key,
   }
 }
 
-bool circular::ConfigMap::has_section(std::string section) const {
+bool circular::ConfigMap::has_section(const std::string &section) const {
   return _repr.contains(section);
 }
 
-bool circular::ConfigMap::has_section_key(std::string section,
-                                          std::string key) const {
+bool circular::ConfigMap::has_section_key(const std::string &section,
+                                          const std::string &key) const {
   return _repr.contains(section) && _repr.at(section).contains(key);
 }

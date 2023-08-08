@@ -48,19 +48,19 @@ public:
   /// @param section The section to be erased.
   ///
   /// Throws if section does not exist.
-  void erase_section(std::string section);
+  void erase_section(const std::string &section);
 
   /// @brief erase a key-value pair.
   /// @param section The section of the key to be erased.
   /// @param key The key whose key-value pair is to be erased.
   ///
   /// Throws if either section or key do not exist.
-  void erase_section_key(std::string section, std::string key);
+  void erase_section_key(const std::string &section, const std::string &key);
 
   /// @brief list the keys present in a section.
   /// @param section The section for which a list of keys is desired.
   /// @return A vector of keys in that section (in no particular order).
-  std::vector<std::string> get_section_keys(std::string section) const;
+  std::vector<std::string> get_section_keys(const std::string &section) const;
 
   /// @brief List the sections present in the ConfigMap.
   /// @return A vector of sections in the ConfigMap (in no particular order).
@@ -77,7 +77,7 @@ public:
   /// failure (if default_value != std::monostate).
   ///
   /// Throws on lookup failure if default_value == std::monostate.
-  ConfigVariant get_value(std::string section, std::string key,
+  ConfigVariant get_value(const std::string &section, const std::string &key,
                           ConfigVariant default_value = ConfigVariant{});
 
   /// @brief Insert or assign a value in the ConfigMap.
@@ -87,19 +87,21 @@ public:
   /// (equivalently std::monostate) will delete the key (i.e., null it out).
   ///
   /// If either section or key do not exist, they will be created.
-  void set_value(std::string section, std::string key, ConfigVariant value);
+  void set_value(const std::string &section, const std::string &key,
+                 ConfigVariant value);
 
   /// @brief Test whether the ConfigMap contains a section with that name.
   /// @param section The section whose existence is in question.
   /// @return true if the ConfigMap contains a section with that name.
-  bool has_section(std::string section) const;
+  bool has_section(const std::string &section) const;
 
   /// @brief Test whether the ConfigMap contains a section and key with that
   /// name.
   /// @param section The section of the key whose existence is in question.
   /// @param key The key whose existence is in question.
   /// @return true if the ConfigMap contains a section/key with those names.
-  bool has_section_key(std::string section, std::string key) const;
+  bool has_section_key(const std::string &section,
+                       const std::string &key) const;
 
 private:
   _config_map_repr_t _repr{};
