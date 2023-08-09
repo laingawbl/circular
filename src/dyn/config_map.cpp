@@ -1,7 +1,18 @@
 #include <circular/config_map.hpp>
 #include <stdexcept>
+#include <toml++/toml.h>
 
 using namespace circular;
+
+ConfigMap circular::ConfigMap::parse_from_file(std::string_view file_path) {
+  ConfigMap m{};
+  auto toml_parsed = toml::parse_file(file_path);
+  for (auto &&[k, v] : toml_parsed) {
+    // TODO... k.str();
+  }
+
+  return m;
+}
 
 void circular::ConfigMap::clear() { _repr.clear(); }
 

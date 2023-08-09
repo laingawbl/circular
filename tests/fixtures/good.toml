@@ -1,0 +1,10 @@
+no.section = 2
+
+[foo]
+
+bar = 1
+baz = true
+qux = "hello"
+mixedList = [ 1.0, true, "jimmy" ]
+
+read.me.as.single.key = 1.61828

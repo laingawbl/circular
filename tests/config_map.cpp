@@ -83,3 +83,21 @@ TEST_CASE("ConfigMap can test for section and key existence", "[config_map]") {
   REQUIRE(m.has_section_key("sec", "qux") == false);
   REQUIRE(m.has_section_key("ick", "foo") == false);
 }
+
+TEST_CASE("ConfigMap parses a file with valid TOML subset", "[config_map]") {
+  auto m = circular::ConfigMap::parse_from_file("tests/fixtures/good.toml");
+
+  REQUIRE(std::get<int>(m.get_value("", "no.section")) == 2);
+  REQUIRE(std::get<int>(m.get_value("foo", "bar")) == 1);
+  REQUIRE(std::get<double>(m.get_value("foo", "read.me.as.single.key")) ==
+          Catch::Approx(1.61828));
+
+  circular::VariantList l{1.0, true, "jimmy"};
+  REQUIRE(std::get<circular::VariantList>(m.get_value("foo", "mixedList")) ==
+          l);
+}
+
+TEST_CASE("ConfigMap throws on invalid files", "[config_map]") {
+  REQUIRE_THROWS(
+      circular::ConfigMap::parse_from_file("tests/fixtures/bad.toml"));
+}
