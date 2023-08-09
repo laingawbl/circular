@@ -1,0 +1,12 @@
+"no_section" = 2
+
+[foo]
+
+bar = 1
+baz = true
+qux = "hello"
+mixedList = [ 1.0, true, "jimmy" ]
+
+[bar]
+
+"quoted" = 1.61828

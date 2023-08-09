@@ -41,6 +41,13 @@ public:
   ConfigMap() = default;
   ~ConfigMap() = default;
 
+  /// @brief load from a file via TomlPlusPlus.
+  /// @param file_path The relative or absolute path of the file to be loaded.
+  /// @return a ConfigMap with whatever was parsed.
+  ///
+  /// Throws toml::parse_error on parse error.
+  static ConfigMap parse_from_file(const std::string &file_path);
+
   /// @brief erase all sections and keys, making the ConfigMap empty.
   void clear();
 
