@@ -87,7 +87,7 @@ TEST_CASE("ConfigMap can test for section and key existence", "[config_map]") {
 TEST_CASE("ConfigMap parses a file with valid TOML subset", "[config_map]") {
   auto m = circular::ConfigMap::parse_from_file("tests/fixtures/good.toml");
 
-  REQUIRE(m.has_section_key("", "no_section"));
+  REQUIRE(std::get<int>(m.get_value("", "no_section")) == 2);
   REQUIRE(std::get<int>(m.get_value("foo", "bar")) == 1);
   REQUIRE(std::get<double>(m.get_value("bar", "quoted")) ==
           Catch::Approx(1.61828));
