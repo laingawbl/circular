@@ -2,8 +2,6 @@
 #include <stdexcept>
 #include <toml++/toml.h>
 
-#include <iostream>
-
 using namespace circular;
 
 ConfigMap circular::ConfigMap::parse_from_file(const std::string &file_path) {
