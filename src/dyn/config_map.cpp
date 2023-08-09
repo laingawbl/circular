@@ -2,15 +2,75 @@
 #include <stdexcept>
 #include <toml++/toml.h>
 
+#include <iostream>
+
 using namespace circular;
 
 ConfigMap circular::ConfigMap::parse_from_file(std::string_view file_path) {
   ConfigMap m{};
+
+  auto pod_visitor = [](const toml::node &val) -> circular::PodVariant {
+    if (val.is_boolean()) {
+      return **val.as_boolean();
+    }
+    if (val.is_integer()) {
+      return static_cast<int>(**val.as_integer());
+    }
+    if (val.is_floating_point()) {
+      return **val.as_floating_point();
+    }
+    if (val.is_string()) {
+      return **val.as_string();
+    }
+    return circular::PodVariant{};
+  };
+
+  auto visitor =
+      [pod_visitor](const toml::node &node) -> circular::ConfigVariant {
+    if (node.is_array()) {
+      VariantList vlist{};
+      for (auto &&v : *node.as_array()) {
+        vlist.push_back(v.visit(pod_visitor));
+      }
+      return vlist;
+    }
+    if (node.is_table()) {
+      VariantDict vdict{};
+      for (auto &&[k, v] : *(node.as_table())) {
+        std::string key_str{k.str()};
+        vdict.emplace(key_str, v.visit(pod_visitor));
+      }
+      return vdict;
+    }
+    if (node.is_boolean()) {
+      return **node.as_boolean();
+    }
+    if (node.is_integer()) {
+      return static_cast<int>(**node.as_integer());
+    }
+    if (node.is_floating_point()) {
+      return **node.as_floating_point();
+    }
+    if (node.is_string()) {
+      return **node.as_string();
+    }
+    return circular::ConfigVariant{};
+  };
+
   auto toml_parsed = toml::parse_file(file_path);
   for (auto &&[k, v] : toml_parsed) {
-    // TODO... k.str();
+    std::string section_str{k.str()};
+    if (v.is_table()) {
+      for (auto &&[sk, sv] : *v.as_table()) {
+        std::string key_str{sk.str()};
+        auto parsed_val = sv.visit(visitor);
+        m.set_value(section_str, key_str, parsed_val);
+      }
+    } else {
+      auto parsed_val = v.visit(visitor);
+      m.set_value("", section_str, parsed_val);
+    }
   }
-
   return m;
 }
 

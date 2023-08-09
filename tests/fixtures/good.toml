@@ -1,4 +1,4 @@
-no.section = 2
+"no_section" = 2
 
 [foo]
 
@@ -7,4 +7,6 @@ baz = true
 qux = "hello"
 mixedList = [ 1.0, true, "jimmy" ]
 
-read.me.as.single.key = 1.61828
+[bar]
+
+"quoted" = 1.61828
