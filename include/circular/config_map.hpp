@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <string_view>
 #include <unordered_map>
 #include <variant>
 #include <vector>
@@ -47,7 +46,7 @@ public:
   /// @return a ConfigMap with whatever was parsed.
   ///
   /// Throws toml::parse_error on parse error.
-  static ConfigMap parse_from_file(std::string_view file_path);
+  static ConfigMap parse_from_file(const std::string &file_path);
 
   /// @brief erase all sections and keys, making the ConfigMap empty.
   void clear();

@@ -6,7 +6,7 @@
 
 using namespace circular;
 
-ConfigMap circular::ConfigMap::parse_from_file(std::string_view file_path) {
+ConfigMap circular::ConfigMap::parse_from_file(const std::string &file_path) {
   ConfigMap m{};
 
   auto pod_visitor = [](const toml::node &val) -> circular::PodVariant {
