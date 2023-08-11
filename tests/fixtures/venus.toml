@@ -1,0 +1,15 @@
+[body]
+
+orbit_radius = 108.208e+9
+
+ecc_min = 0.007
+ecc_max = 0.02
+ecc_period = 50000.0
+ecc_phase = 1.57
+
+body_density = 5243.0
+
+# Venus' rotation is retrograde
+body_period = -1.00872e+7
+
+body_radius = 6.0518e+6

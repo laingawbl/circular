@@ -26,3 +26,11 @@ TEST_CASE("World sanity check", "[parameter][.verb]") {
   REQUIRE(w.planetaryBalanceTemperature == Catch::Approx(258).epsilon(1e-3));
   REQUIRE(w.bodyGravity == Catch::Approx(9.8203).epsilon(1e-3));
 }
+
+TEST_CASE("World loads Venus parameters", "[parameter][.verb]") {
+  auto venus_def = ConfigMap::parse_from_file("tests/fixtures/venus.toml");
+  auto w = World(venus_def);
+
+  REQUIRE(w.bodyGravity == Catch::Approx(8.87).epsilon(1e-3));
+  REQUIRE(w.planetaryBalanceTemperature == Catch::Approx(303).epsilon(1e-3));
+}

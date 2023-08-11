@@ -9,6 +9,8 @@ mkdir -p build/
 
 cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .
 
-cp -r ../tests/fixtures tests/fixtures
+mkdir -p tests/fixtures
+
+cp ../tests/fixtures/* tests/fixtures
 
 ./tests/tests "$@"
