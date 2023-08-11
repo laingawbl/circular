@@ -1,6 +1,7 @@
 #pragma once
 
 #include "constants.hpp"
+#include "parameter.hpp"
 
 namespace circular {
 namespace astro {
@@ -64,5 +65,37 @@ double planetaryBalanceTemperature(double sunConstant, double bondAlbedo,
 /// @param Distance
 /// @return in radians.
 double sunApparentSize(double sunSize, double distance);
+
+/// @brief The true anomaly of a body, in an orbit of eccentricity Eccentricity,
+/// at fractional time of the orbit [0..1) timeInYear. The periapsis is assumed
+/// to be at 0.0, but can be set via [0..1] timeOfPeriapsis.
+/// @param eccentricity
+/// @param year
+/// @param timeInYear
+/// @return in radians.
+double calcTrueAnomaly(double eccentricity, double timeInYear,
+                       double timeOfPeriapsis = 0.0);
+
+/// @brief Calculate the solar declination on a planet with tilt AxialTilt and
+/// orbital true anomaly TrueAnomaly, at a fractional time in the year [0..1]
+/// TimeInYear. This value should be zero at the equinoxes, and a maximal or
+/// minimal value at either solstice.
+/// @param trueAnomaly
+/// @param timeInYear
+/// @return in radians.
+double calcDeclination(double axialTilt, double trueAnomaly, double timeInYear);
+
+/// @brief Calculate the average exposure per rotation, of a location on a
+/// rotating planet, at latitude Latitude, to a sun at declination Declination.
+/// Keep in mind that this value is decreasingly meaningful as the length of a
+/// planetary rotation (i.e. a day) approaches the length of a planetary orbit
+/// (i.e. a year), or matches it, as on tidally-locked bodies.
+/// @param latitude
+/// @param declination
+/// @return dimensionless ratio in [0..1], corresponding to the fractional
+/// brightness of a _constant, direct illumination_ that would match the daily
+/// average energy from the moving sun at that latitude.
+double calcDailySunExposure(double latitude, double declination);
+
 } // namespace astro
 } // namespace circular
