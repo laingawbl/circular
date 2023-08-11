@@ -11,4 +11,4 @@ cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .
 
 cp -r ../tests/fixtures tests/fixtures
 
-./tests/tests
+./tests/tests "$@"
