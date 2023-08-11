@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cmath>
+#include <ostream>
+#include <string>
 
 namespace circular {
 namespace param {
@@ -29,6 +31,19 @@ struct Harmonic {
   double _phase;
 };
 
+template <typename T> class Parameter {
+public:
+  Parameter(T val = T{}, std::string_view key = "")
+      : _value{val}, _key{std::string{key}} {}
+  std::string _key;
+
+  T get() const { return _value; }
+  T operator()() const { return _value; }
+  void set(const T &newVal) { _value = newVal; }
+
+private:
+  T _value;
+};
 
 } // namespace param
 } // namespace circular
