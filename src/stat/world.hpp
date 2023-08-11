@@ -19,6 +19,61 @@ public:
   World() = delete;
   World(const ConfigMap &options);
 
+  double getOrbitRadius() const { return orbitRadius(); }
+  void setOrbitRadius(const param::Parameter<double> &orbitRadius_) {
+    orbitRadius = orbitRadius_;
+    calcBodyParams();
+  }
+
+  double getSunSize() const { return sunSize(); }
+  void setSunSize(const param::Parameter<double> &sunSize_) {
+    sunSize = sunSize_;
+    calcBodyParams();
+  }
+
+  double getSunTemp() const { return sunTemp(); }
+  void setSunTemp(const param::Parameter<double> &sunTemp_) {
+    sunTemp = sunTemp_;
+    calcBodyParams();
+  }
+
+  param::Harmonic getEccentricity() const { return eccentricity(); }
+  void setEccentricity(const param::Parameter<param::Harmonic> &eccentricity_) {
+    eccentricity = eccentricity_;
+    calcBodyParams();
+  }
+
+  double getBodyPeriod() const { return bodyPeriod(); }
+  void setBodyPeriod(const param::Parameter<double> &bodyPeriod_) {
+    bodyPeriod = bodyPeriod_;
+    calcBodyParams();
+  }
+
+  double getBodyRadius() const { return bodyRadius(); }
+  void setBodyRadius(const param::Parameter<double> &bodyRadius_) {
+    bodyRadius = bodyRadius_;
+    calcBodyParams();
+  }
+
+  double getBodyDensity() const { return bodyDensity(); }
+  void setBodyDensity(const param::Parameter<double> &bodyDensity_) {
+    bodyDensity = bodyDensity_;
+    calcBodyParams();
+  }
+
+  double getBodySurfaceArea() const { return bodySurfaceArea; }
+
+  double getBodyMass() const { return bodyMass; }
+
+  double getBodyGravity() const { return bodyGravity; }
+
+  double getSunConstant() const { return sunConstant; }
+
+  double getPlanetaryBalanceTemperature() const {
+    return planetaryBalanceTemperature;
+  }
+
+private:
   // Primaries
   param::Parameter<double> orbitRadius{
       param::AstronomicalUnit,
@@ -56,7 +111,6 @@ public:
   double sunConstant;
   double planetaryBalanceTemperature;
 
-private:
   void calcBodyParams();
 
   ConfigMap _createOptions;

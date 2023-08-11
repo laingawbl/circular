@@ -22,15 +22,22 @@ TEST_CASE("Planetary sanity check", "[parameter][.verb]") {
 TEST_CASE("World sanity check", "[parameter][.verb]") {
   auto w = World(ConfigMap{});
 
-  REQUIRE(w.sunConstant == Catch::Approx(1361).epsilon(1e-3));
-  REQUIRE(w.planetaryBalanceTemperature == Catch::Approx(258).epsilon(1e-3));
-  REQUIRE(w.bodyGravity == Catch::Approx(9.8203).epsilon(1e-3));
+  REQUIRE(w.getSunConstant() == Catch::Approx(1361).epsilon(1e-3));
+  REQUIRE(w.getPlanetaryBalanceTemperature() ==
+          Catch::Approx(258).epsilon(1e-3));
+  REQUIRE(w.getBodyGravity() == Catch::Approx(9.8203).epsilon(1e-3));
 }
 
-TEST_CASE("World loads Venus parameters", "[parameter][.verb]") {
+TEST_CASE("World loads Venus parameters, and updates them on setting a primary",
+          "[parameter][.verb]") {
   auto venus_def = ConfigMap::parse_from_file("tests/fixtures/venus.toml");
   auto w = World(venus_def);
 
-  REQUIRE(w.bodyGravity == Catch::Approx(8.87).epsilon(1e-3));
-  REQUIRE(w.planetaryBalanceTemperature == Catch::Approx(303).epsilon(1e-3));
+  REQUIRE(w.getBodyGravity() == Catch::Approx(8.87).epsilon(1e-3));
+  REQUIRE(w.getPlanetaryBalanceTemperature() ==
+          Catch::Approx(303).epsilon(1e-3));
+
+  auto oldBodyGravity = w.getBodyGravity();
+  w.setBodyDensity(w.getBodyDensity() + 1.0);
+  REQUIRE(w.getBodyGravity() > oldBodyGravity);
 }
