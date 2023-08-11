@@ -6,6 +6,28 @@
 
 using namespace circular;
 
+TEST_CASE("Lut1D works", "[parameter]") {
+  param::Lut1D<3> lut(0.0, 2.0);
+  lut._samples[1] = 1.0;
+  lut._samples[2] = 2.0;
+
+  REQUIRE(lut.at(-1.0) == Catch::Approx(0.0));
+  REQUIRE(lut.at(0.5) == Catch::Approx(0.5));
+  REQUIRE(lut.at(2.0) == Catch::Approx(2.0));
+  REQUIRE(lut.at(2.5) == Catch::Approx(2.0));
+}
+
+TEST_CASE("Lut1D works with reversed bounds", "[parameter]") {
+  param::Lut1D<3> lut(2.0, 0.0);
+  lut._samples[1] = 1.0;
+  lut._samples[2] = 2.0;
+
+  REQUIRE(lut.at(-1.0) == Catch::Approx(2.0));
+  REQUIRE(lut.at(0.5) == Catch::Approx(1.5));
+  REQUIRE(lut.at(2.0) == Catch::Approx(0.0));
+  REQUIRE(lut.at(2.5) == Catch::Approx(0.0));
+}
+
 TEST_CASE("Planetary sanity check", "[parameter][.verb]") {
   auto sun_const =
       astro::sunConstant(param::TempSun, 1.0, param::AstronomicalUnit);

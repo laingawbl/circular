@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <cmath>
 #include <ostream>
 #include <string>
@@ -29,6 +30,42 @@ struct Harmonic {
   double _amplitude;
   double _period;
   double _phase;
+};
+
+template <int N> struct Lut1D {
+  Lut1D() = delete;
+  Lut1D(double a, double b) : _from{a}, _to{b}, _spread{b - a} {}
+
+  double _from;
+  double _to;
+  double _spread;
+
+  std::array<double, N> _samples{};
+
+  inline double at(double x) const {
+    auto xnorm = std::clamp((x - _from) / _spread, 0.0, 1.0);
+    int A = std::floor(xnorm * (N - 1));
+    int B = (A + 1) % N;
+    double t = xnorm * static_cast<double>(N - 1) - static_cast<double>(A);
+    return std::lerp(_samples[A], _samples[B], t);
+  }
+};
+
+template <int N, int M> struct Lut2D {
+  Lut2D() = delete;
+  Lut2D(double a, double b, double x, double y)
+      : _a{a}, _b{b}, _spread_ab{b - a}, _x{x}, _y{y}, _spread_xy{y - x} {}
+
+  double _a;
+  double _b;
+  double _spread_ab;
+  double _x;
+  double _y;
+  double _spread_xy;
+
+  std::array<std::array<double, M>, N> _samples{};
+
+  inline double at(double u, double v) const { return 0.0; }
 };
 
 template <typename T> class Parameter {
