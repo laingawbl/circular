@@ -1,8 +1,8 @@
 #include <catch2/catch_all.hpp>
+#include <circular/world.hpp>
 
 #include "../src/stat/parameter.hpp"
 #include "../src/stat/planets.hpp"
-#include "../src/stat/world.hpp"
 
 using namespace circular;
 
