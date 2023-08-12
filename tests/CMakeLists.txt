@@ -8,7 +8,7 @@ FetchContent_Declare(
   GIT_TAG v3.3.2)
 FetchContent_MakeAvailable(catch)
 
-add_executable(tests test.cpp tasker.cpp config_map.cpp)
+add_executable(tests test.cpp tasker.cpp config_map.cpp world.cpp)
 
 set_target_properties(
   tests

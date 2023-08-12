@@ -86,7 +86,7 @@ public:
   /// Throws std::out_of_range on lookup failure if default_value ==
   /// std::monostate.
   ConfigVariant get_value(const std::string &section, const std::string &key,
-                          ConfigVariant default_value = ConfigVariant{});
+                          ConfigVariant default_value = ConfigVariant{}) const;
 
   /// @brief Insert or assign a value in the ConfigMap.
   /// @param section The section of the key-value pair to create.

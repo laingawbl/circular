@@ -119,7 +119,7 @@ std::vector<std::string> circular::ConfigMap::get_sections() const {
 
 ConfigVariant circular::ConfigMap::get_value(const std::string &section,
                                              const std::string &key,
-                                             ConfigVariant default_value) {
+                                             ConfigVariant default_value) const {
   auto finds = _repr.find(section);
   if (finds == _repr.end()) {
     if (default_value == ConfigVariant{}) {
