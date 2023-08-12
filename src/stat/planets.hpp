@@ -1,3 +1,10 @@
+/**
+ * @file planets.hpp
+ * @author Alex Laing (livingearthcompany@gmail.com)
+ * @brief Various free functions involving planetary body data, orbits, and
+ * insolation.
+ */
+
 #pragma once
 
 #include "constants.hpp"

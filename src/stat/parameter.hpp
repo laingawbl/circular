@@ -1,3 +1,9 @@
+/**
+ * @file parameter.hpp
+ * @author Alex Laing (livingearthcompany@gmail.com)
+ * @brief Data and helper types for World.
+ */
+
 #pragma once
 
 #include <array>
@@ -7,6 +13,11 @@
 
 namespace circular {
 namespace param {
+
+/**
+ * @brief A Harmonic represents a cyclical or sinusoidal value, which oscillates
+ * about a central value over time.
+ */
 struct Harmonic {
   Harmonic() = delete;
   Harmonic(double centre, double amplitude, double period, double phase = 0.0)
@@ -32,6 +43,12 @@ struct Harmonic {
   double _phase;
 };
 
+/**
+ * @brief A linearly-interpolated 1-dimensional lookup table (LUT).
+ *
+ * @tparam N the number of samples in the LUT. e.g.: Lut1D<3> samples from a
+ * std::array<double, 3>.
+ */
 template <int N> struct Lut1D {
   Lut1D() = delete;
   Lut1D(double a, double b) : _from{a}, _to{b}, _spread{b - a} {}
@@ -51,6 +68,12 @@ template <int N> struct Lut1D {
   }
 };
 
+/**
+ * @brief A linearly-interpolated 2-dimensional lookup table (LUT).
+ *
+ * @tparam N The number of samples in the LUT's first index.
+ * @tparam M The number of samples in the LUT's second index.
+ */
 template <int N, int M> struct Lut2D {
   Lut2D() = delete;
   Lut2D(double a, double b, double x, double y)
@@ -68,6 +91,13 @@ template <int N, int M> struct Lut2D {
   inline double at(double u, double v) const { return 0.0; }
 };
 
+/**
+ * @brief A named value which you CAN mutate, but which you really shouldn't, or
+ * something... I'm not sure this is a good or intentful class or not and may
+ * delete it...
+ *
+ * @tparam T the underlying type of the parameter.
+ */
 template <typename T> class Parameter {
 public:
   Parameter(T val = T{}, std::string_view key = "")

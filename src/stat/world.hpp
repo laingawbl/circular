@@ -1,3 +1,14 @@
+/**
+ * @file world.hpp
+ * @author Alex Laing (livingearthcompany@gmail.com)
+ * @brief Declaration of the World class, which manages non-dynamic simulation
+ * info.
+ *
+ * TODO: I have put two planetary constants into the should_be_defines namespace
+ * which should be moved to runtime-loaded defines in andrija, and then passed
+ * via the ConfigMap.
+ */
+
 #pragma once
 
 #include <circular/config_map.hpp>
@@ -8,12 +19,23 @@
 
 namespace circular {
 namespace should_be_defines {
-const inline double KarmanConst = 0.4;            // [-]
-const inline double SurfacePressure = 101.325e+3; // [Pa]
-const inline double BondAlbedo = 0.3;             // [-]
-const inline double Emissivity = 0.95;            // [-]
+const inline double BondAlbedo = 0.3;  // [-]
+const inline double Emissivity = 0.95; // [-]
 } // namespace should_be_defines
 
+/**
+ * @brief
+ *
+ * A World captures three things:
+ * 1. a set of physical constants,
+ * 2. a set of parameters for grid spacings, and
+ * 3. a reference or resting state of the planet.
+ *
+ * That is, World captures invariant facts that are not changed by the evolution
+ * of the planet's fast or slow dynamics. DynamicModels operate in reference to
+ * an instance of a World, informing the model of e.g. gravity, the planet's
+ * rotation, the strength of the Sun or Coriolis force, etc.
+ */
 class World {
 public:
   World() = delete;
