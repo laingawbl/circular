@@ -14,8 +14,8 @@
 #include <circular/config_map.hpp>
 #include <string>
 
-#include "constants.hpp"
-#include "parameter.hpp"
+#include "../src/stat/constants.hpp"
+#include "../src/stat/parameter.hpp"
 
 namespace circular {
 namespace should_be_defines {
@@ -126,6 +126,16 @@ private:
       "body_density",
   };
 
+  param::Parameter<int> nY{
+      256,
+      "nY",
+  };
+
+  param::Parameter<int> nR{
+      16,
+      "nR",
+  };
+
   // Derived
   double bodySurfaceArea;
   double bodyMass;
@@ -133,6 +143,7 @@ private:
   double sunConstant;
   double planetaryBalanceTemperature;
 
+  void calcGridSpacing();
   void calcBodyParams();
 
   ConfigMap _createOptions;

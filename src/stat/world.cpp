@@ -33,6 +33,8 @@ circular::World::World(const ConfigMap &options) {
   lookupHelper(options, bodyDensity, bodySection);
 
   calcBodyParams();
+
+  calcGridSpacing();
 }
 
 void circular::World::calcBodyParams() {
@@ -44,3 +46,5 @@ void circular::World::calcBodyParams() {
       sunConstant, should_be_defines::BondAlbedo,
       should_be_defines::Emissivity);
 }
+
+void circular::World::calcGridSpacing() {}
