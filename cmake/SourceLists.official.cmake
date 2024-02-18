@@ -8,5 +8,6 @@ ${PROJECT_SOURCE_DIR}/src/stat/parameter.hpp
 ${PROJECT_SOURCE_DIR}/src/stat/planets.cpp
 ${PROJECT_SOURCE_DIR}/src/stat/world.cpp
 ${PROJECT_SOURCE_DIR}/src/stat/constants.hpp
+${PROJECT_SOURCE_DIR}/src/model/model.cpp
 ${PROJECT_SOURCE_DIR}/src/tasker/tasker.cpp
 )
